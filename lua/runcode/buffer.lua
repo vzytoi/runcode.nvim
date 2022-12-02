@@ -39,6 +39,54 @@ M.get_direction = function()
     return "tab"
 end
 
+
+M.direction = function()
+    local win = vim.api.nvim_get_current_win()
+
+    if vim.go.columns == vim.fn.winwidth(win) then
+        return "horizontal"
+    elseif vim.fn.winheight(win) + vim.go.cmdheight + 2 == vim.go.lines then
+        return "vertical"
+    end
+
+    return "tab"
+end
+
+M.size = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+    if M.direction() == "horizontal" then
+        return #lines
+    else
+        local m
+
+        for _, v in ipairs(lines) do
+            if not m or m < #v then
+                m = #v
+            end
+        end
+
+        return m
+    end
+end
+
+M.resize = function(dir)
+
+    if vim.bo.filetype ~= "RunCode" then
+        return
+    end
+
+    local win = vim.api.nvim_get_current_win()
+    local size = M.size()
+
+    vim.api[
+        "nvim_win_set_" ..
+            (dir == "vertical" and "width" or "height")
+        ](win, size + 10)
+
+end
+
 M.create_link = function(nra, nrb)
     vim.api.nvim_buf_set_var(nra, "To", nrb)
     vim.api.nvim_buf_set_var(nrb, "From", nra)

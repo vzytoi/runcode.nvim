@@ -59,9 +59,10 @@ M.open = function(dir)
 
             write.table(output)
 
-
+            buffer.resize(dir)
         end
     })
+
 
 end
 
