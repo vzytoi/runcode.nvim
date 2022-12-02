@@ -79,4 +79,17 @@ Here are the expressions being substituted
 The `#` expression should be use to store executables before execution.
 
 If an expression is missing, make an issue or a pull request.<br/>
-The expression list can be found in _runcode/commands.lua_. 
+The expression list can be found in _runcode/parser.lua_. 
+
+## Goal
+
+- Automatic project detection.
+- More language support
+- Aesthetic loading
+- Compile xor interpret languages supporting it
+
+## Insipiration / Alternatives
+
+[vim-executioner](https://github.com/EvanQuan/vim-executioner)<br/>
+[executor.nvim](https://github.com/google/executor.nvim)
+
