@@ -37,29 +37,30 @@ end)
 Here is the list of languages already supported.<br/>
 Of course all of them can be overridden and others added. 
 
-| Language   | Command           | Project
-|------------|-------------------|--------------------
-| typescript | ts-node %         | ✖
-| javascript | node %            | ✖
-| go         | go run %          | ✖
-| php        | php %             | ✖
-| python     | python3 %         | ✖
-| lua        | lua %             | ✖
-| c          | gcc % -o $ && $   | ✖
-| rust       | rustc % -o $ && $ | ✖
-| ocaml      | ocaml %           | ✖
+| Language   | Command             | Project
+|------------|---------------------|--------------------
+| typescript | ts-node %           | ✖
+| javascript | node %              | ✖
+| go         | go run %            | ✖
+| php        | php %               | ✖
+| python     | python3 %           | ✖
+| lua        | lua %               | ✖
+| c          | gcc % -o #@ && #@   | ✖
+| rust       | rustc % -o #@ && #@ | ✖
+| ocaml      | ocaml %             | ✖
 
 ## How to create yours
 
 As shown in the installation section, call the setup function and add the languages you want.<br/>
 Here are the expressions being substituted
 
-| Expression | Substitution                      | 
-|------------|-----------------------------------|
-| %          | `vim.fn.expand('%:p')`            |
-| $          | .../dump/`vim.fn.expand('%:t:r')` |
+| Expression | Substitution                         | 
+|------------|--------------------------------------|
+| %          | `vim.fn.expand('%:p')`               |
+| @          | `vim.fn.expand('%:t:r')`             |
+| #          | `vim.fn.stdpath('data')..'/rooter/'` |
 
-The dump folder is created in `vim.fn.stdpath('data')` and contains the executables.<br/>
+The `#` expression should be use to store executables before execution.
 
 If an expression is missing, make an issue or a pull request.<br/>
 The expression list can be found in _runcode/parser.lua_. 

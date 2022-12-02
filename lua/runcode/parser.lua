@@ -7,7 +7,8 @@ M.parse = function(cmd)
 
     local parsing_table = {
         ["%"] = vim.fn.expand('%:p'),
-        ["$"] = dump_path .. vim.fn.expand('%:t:r'),
+        ["#"] = dump_path,
+        ["@"] = vim.fn.expand('%:t:r'),
     }
 
     for sub, rep in pairs(parsing_table) do

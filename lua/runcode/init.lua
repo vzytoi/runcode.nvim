@@ -14,8 +14,8 @@ M.config = {
         php = "php %",
         python = "python3 %",
         lua = "lua %",
-        c = "gcc % -o $ && $",
-        rust = "rustc % -o $ && $"
+        c = "gcc % -o #@ && #@",
+        rust = "rustc % -o #@ && #@"
     }
 }
 
