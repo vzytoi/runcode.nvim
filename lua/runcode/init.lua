@@ -4,14 +4,16 @@ local parser = require('runcode.parser')
 local buffer = require('runcode.buffer')
 local write = require('runcode.write')
 local timer = require('runcode.timer')
-
+local project = require('runcode.project')
 local commands = require('runcode.commands')
 
 M.setup = function(cmd)
 
     cmd = cmd or {}
+
     local compile = cmd.compile or {}
     local interpret = cmd.interpret or {}
+    local projects = cmd.project or {}
 
     commands.compile = vim.tbl_extend(
         "force", commands.compile, compile
@@ -20,6 +22,10 @@ M.setup = function(cmd)
     commands.interpret = vim.tbl_extend(
         "force", commands.interpret, interpret
     )
+
+    commands.interpret = vim.tbl_extend(
+        "force", commands.project, projects
+    )
 end
 
 M.run = function(tbl)
@@ -27,7 +33,9 @@ M.run = function(tbl)
     tbl = tbl or {}
 
     local dir = tbl.dir or "horizontal"
-    local cmd = parser.get(commands, tbl.method)
+
+    local name = project.get()
+    local cmd = parser.get(commands, tbl.method, name)
 
     if not cmd then
         return

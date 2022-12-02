@@ -1,6 +1,5 @@
 local M = {}
 
-
 M.clear = function(nr)
     nvim.buf_set_lines(nr, 0, -1, true, {})
 end

@@ -42,11 +42,17 @@ end)
 -- will be executed horizontally.
 
 vim.keymap.set("n", "<leader>xx", function()
-    require('runcode').run { method = "compile" }
+    require('runcode').run { method = "project" }
 end)
+
+-- run {
+--     method = "project" | "interpret" | "compile" | nil
+--     dir = "vertical" | "horizontal" | "tab" | nil
+-- } 
 
 
 ```
+
 
 ## Supported list
 
@@ -63,7 +69,7 @@ Of course all of them can be overridden and others added.
 | lua        | lua %      | ✖                      | ✖
 | c          | ✖          | gcc % -o #@ && #@      | ✖
 | rust       | ✖          | rustc % -o #@ && #@    | ✖      
-| ocaml      | ocaml %    | ocamlc % -o #@ && #@   | ✖
+| ocaml      | ocaml %    | ocamlc % -o #@ && #@   | dune exec ^
 
 ## How to create yours
 
@@ -75,6 +81,7 @@ Here are the expressions being substituted
 | %          | `vim.fn.expand('%:p')`               |
 | @          | `vim.fn.expand('%:t:r')`             |
 | #          | `vim.fn.stdpath('data')..'/rooter/'` |
+| ^          | project name if found                |
 
 The `#` expression should be use to store executables before execution.
 

@@ -13,5 +13,8 @@ return {
         php = "php %",
         python = "python3 %",
         lua = "lua %",
+    },
+    project = {
+        ocaml = "dune exec ^"
     }
 }
