@@ -88,6 +88,15 @@ The `#` expression should be use to store executables before execution.
 If an expression is missing, make an issue or a pull request.<br/>
 The expression list can be found in _runcode/parser.lua_. 
 
+## Highlights
+
+Four highlights can be configured to match your needs:<br/>
+
+- `RunCodeNormal`: Window's background
+- `RunCodeOk`: color of the message in lack of errors
+- `RunCodeError`: Color of the message if an error is found
+- `RunCodeInfo`: The top message with the execution time and the number of lines
+
 ## Goal
 
 - Automatic project detection.

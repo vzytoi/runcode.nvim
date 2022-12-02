@@ -11,6 +11,12 @@ M.set_buffer_opts = function()
     vim.wo.relativenumber = false
     vim.bo.filetype = "RunCode"
 
+    vim.cmd [[
+        hi RunCodeOk guifg=#83c979
+        hi RunCodeError guifg=#FF0000
+        hi RunCodeInfo guifg=#4ec4e6
+        setlocal winhighlight=Normal:RunCodeNormal,EndOfBuffer:RunCodeNormal
+    ]]
 end
 
 M.is_open = function(name)
