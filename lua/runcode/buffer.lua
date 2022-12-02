@@ -83,7 +83,7 @@ M.resize = function(dir)
     vim.api[
         "nvim_win_set_" ..
             (dir == "vertical" and "width" or "height")
-        ](win, size + 10)
+        ](win, size + 5)
 
 end
 

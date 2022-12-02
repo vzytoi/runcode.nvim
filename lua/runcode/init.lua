@@ -5,35 +5,40 @@ local buffer = require('runcode.buffer')
 local write = require('runcode.write')
 local timer = require('runcode.timer')
 
-M.config = {
-    commands = {
-        ocaml = "ocaml %",
-        typescript = "ts-node %",
-        javascript = "node %",
-        go = "go run %",
-        php = "php %",
-        python = "python3 %",
-        lua = "lua %",
-        c = "gcc % -o #@ && #@",
-        rust = "rustc % -o #@ && #@"
-    }
-}
+local commands = require('runcode.commands')
 
 M.setup = function(cmd)
-    M.config.commands = vim.tbl_extend(
-        "force", M.config.commands, cmd
+
+    cmd = cmd or {}
+    local compile = cmd.compile or {}
+    local interpret = cmd.interpret or {}
+
+    commands.compile = vim.tbl_extend(
+        "force", commands.compile, compile
+    )
+
+    commands.interpret = vim.tbl_extend(
+        "force", commands.interpret, interpret
     )
 end
 
-M.open = function(dir)
+M.run = function(tbl)
 
-    dir = dir or "horizontal"
-    timer.start()
+    tbl = tbl or {}
+
+    local dir = tbl.dir or "horizontal"
+    local cmd = parser.get(commands, tbl.method)
+
+    if not cmd then
+        return
+    end
 
     local output = {}
     local error = false
 
-    vim.fn.jobstart(parser.get(M.config), {
+    timer.start()
+
+    vim.fn.jobstart(cmd, {
         stdout_buffered = true,
         on_stdout = function(_, data)
             if data then

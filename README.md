@@ -13,8 +13,13 @@ use {
     "vzytoi/runcode.nvim",
     config = function()
         require('runcode').setup {
-            ocaml = "ocaml %",
-            c = "gcc % -o $ && $"
+            interpret = {
+                ocaml = "ocaml %",
+            },
+            compile = {
+                ocaml = "ocamlc % -o #@ && #@",
+                c = "gcc % -o $ && $"
+            }
         }
     end
 }
@@ -23,12 +28,23 @@ use {
 ## How to use
 
 ```lua
+
+-- If no method is specified, 
+-- a command will be searched in both starting with the interpretation.
+
 vim.keymap.set("n", "<leader>x", function()
-    require('runcode').open()
+    require('runcode').run {
+        dir = "horizontal"
+    }
 end)
 
--- You can also call open() with a string:
--- "vertical", "horizontal" or "tab".
+-- If no direction is specified, runcode
+-- will be executed horizontally.
+
+vim.keymap.set("n", "<leader>xx", function()
+    require('runcode').run { method = "compile" }
+end)
+
 
 ```
 
@@ -37,17 +53,17 @@ end)
 Here is the list of languages already supported.<br/>
 Of course all of them can be overridden and others added. 
 
-| Language   | Command             | Project
-|------------|---------------------|--------------------
-| typescript | ts-node %           | ✖
-| javascript | node %              | ✖
-| go         | go run %            | ✖
-| php        | php %               | ✖
-| python     | python3 %           | ✖
-| lua        | lua %               | ✖
-| c          | gcc % -o #@ && #@   | ✖
-| rust       | rustc % -o #@ && #@ | ✖
-| ocaml      | ocaml %             | ✖
+| Language   | Interpret  | Compile                | Project
+|------------|------------|------------------------|-----------
+| typescript | ts-node %  | ✖                      | ✖
+| javascript | node %     | ✖                      | ✖
+| go         | go run %   | go build -o #@ % && #@ | ✖
+| php        | php %      | ✖                      | ✖
+| python     | python3 %  | ✖                      | ✖
+| lua        | lua %      | ✖                      | ✖
+| c          | ✖          | gcc % -o #@ && #@      | ✖
+| rust       | ✖          | rustc % -o #@ && #@    | ✖      
+| ocaml      | ocaml %    | ocamlc % -o #@ && #@   | ✖
 
 ## How to create yours
 
@@ -63,4 +79,4 @@ Here are the expressions being substituted
 The `#` expression should be use to store executables before execution.
 
 If an expression is missing, make an issue or a pull request.<br/>
-The expression list can be found in _runcode/parser.lua_. 
+The expression list can be found in _runcode/commands.lua_. 
