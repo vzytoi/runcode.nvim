@@ -6,6 +6,7 @@ local write = require('runcode.write')
 local timer = require('runcode.timer')
 local project = require('runcode.project')
 local commands = require('runcode.commands')
+local loader = require('runcode.loader')
 
 M.setup = function(cmd)
 
@@ -41,6 +42,8 @@ M.run = function(tbl)
         return
     end
 
+    local win = loader.create("Loading...")
+
     local output = {}
     local error = false
 
@@ -73,6 +76,8 @@ M.run = function(tbl)
             write.table(output)
 
             buffer.resize(dir)
+
+            loader.close(win)
         end
     })
 
