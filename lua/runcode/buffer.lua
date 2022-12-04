@@ -10,6 +10,7 @@ M.set_buffer_opts = function()
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.bo.filetype = "RunCode"
+    vim.wo.fillchars = 'eob: '
 
     vim.cmd [[
         hi RunCodeOk guifg=#83c979
