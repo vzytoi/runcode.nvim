@@ -1,4 +1,4 @@
-nvim.create_autocmd("FileType", {
+vim.api.nvim_create_autocmd("FileType", {
     pattern = "RunCode",
     callback = function()
         vim.keymap.set("n", "<cr>", function()
