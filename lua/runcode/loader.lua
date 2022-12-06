@@ -17,7 +17,7 @@ M.create = function(content)
         style = "minimal"
     }
 
-    if vim.fn.has('nvim-0.9.0') then
+    if vim.fn.has('nvim-0.9.0') == 1 then
         config.title = "RunCode"
     end
 
