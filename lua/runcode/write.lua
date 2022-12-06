@@ -1,5 +1,6 @@
 local M = {}
 
+
 M.clear = function(nr)
     nvim.buf_set_lines(nr, 0, -1, true, {})
 end
@@ -8,16 +9,16 @@ M.lines = function(nr, data, l, hl)
 
     data = (type(data) == "table" and data or { data })
 
-    nvim.buf_set_lines(nr, l, l, true, data)
+    vim.api.nvim_buf_set_lines(nr, l, l, true, data)
 
     if hl then
-        nvim.buf_add_highlight(nr, -1, hl, l, 0, -1)
+        vim.apio.nvim_buf_add_highlight(nr, -1, hl, l, 0, -1)
     end
 end
 
 
 M.endl = function(l)
-    nvim.buf_set_lines(vim.api.nvim_get_current_buf(), l, l, true, { "" })
+    vim.api.nvim_buf_set_lines(vim.api.nvim_get_current_buf(), l, l, true, { "" })
 end
 
 
@@ -30,7 +31,7 @@ M.infos = function(timer)
         string.format(
             "In: %s %s | Lines: %s",
             timer.time, timer.unit,
-            nvim.buf_line_count(origin_bufnr)
+            vim.api.nvim_buf_line_count(origin_bufnr)
         ),
         0,
         "RunCodeInfo"
