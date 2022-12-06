@@ -12,7 +12,7 @@ M.lines = function(nr, data, l, hl)
     vim.api.nvim_buf_set_lines(nr, l, l, true, data)
 
     if hl then
-        vim.apio.nvim_buf_add_highlight(nr, -1, hl, l, 0, -1)
+        vim.api.nvim_buf_add_highlight(nr, -1, hl, l, 0, -1)
     end
 end
 
