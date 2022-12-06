@@ -11,6 +11,7 @@ M.set_buffer_opts = function()
     vim.wo.relativenumber = false
     vim.bo.filetype = "RunCode"
     vim.wo.fillchars = 'eob: '
+    vim.wo.wrap = true
 
     vim.cmd [[
         hi RunCodeOk guifg=#83c979
