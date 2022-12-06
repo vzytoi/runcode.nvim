@@ -42,6 +42,7 @@ M.run = function(tbl)
         return
     end
 
+    vim.api.nvim_command("silent w")
     local win = loader.create("Loading...")
 
     local output = {}
