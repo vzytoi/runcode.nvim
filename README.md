@@ -62,7 +62,7 @@ Of course all of them can be overridden and others added.
 | Language   | Interpret  | Compile                | Project
 |------------|------------|------------------------|-----------
 | typescript | ts-node %  | ✖                      | ✖
-| javascript | node %     | ✖                      | ✖
+| javascript | node %     | ✖                      | node ^
 | go         | go run %   | go build -o #@ % && #@ | ✖
 | php        | php %      | ✖                      | ✖
 | python     | python3 %  | ✖                      | ✖
@@ -81,6 +81,7 @@ Here are the expressions being substituted
 | %          | `vim.fn.expand('%:p')`               |
 | @          | `vim.fn.expand('%:t:r')`             |
 | #          | `vim.fn.stdpath('data')..'/rooter/'` |
+| &          | `vim.fn.expand('%:p:h')`             |
 | ^          | project name if found                |
 
 The `#` expression should be use to store executables before execution.

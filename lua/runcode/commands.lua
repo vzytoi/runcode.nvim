@@ -15,6 +15,7 @@ return {
         lua = "lua %",
     },
     project = {
-        ocaml = "dune exec ^"
+        ocaml = "dune exec ^",
+        javascript = "node ^",
     }
 }

@@ -1,20 +1,35 @@
 local M = {}
 
-M.ocaml = function()
+local function search(files)
+    for _, v in ipairs(files) do
+        local path = vim.fs.find(v, { upward = true })
 
-    local names = {
-        "dune-workspace", "dune-project"
-    }
-
-    local find = false
-
-    for _, v in ipairs(names) do
-        if #vim.fs.find(v, { upward = true }) > 0 then
-            find = true
+        if #path > 0 then
+            return path
         end
     end
 
-    if not find then
+    return false
+end
+
+M.javascript = function()
+    local path = search { "package.json" }
+
+    if not path then
+        return
+    end
+
+    local data = vim.fn.json_decode(vim.fn.readfile(path[1]))
+
+    if data.main then
+        return vim.fs.dirname(path[1]) .. "/" .. data.main
+    end
+
+end
+
+M.ocaml = function()
+
+    if not search { "dune-workspace", "dune-project" } then
         return
     end
 

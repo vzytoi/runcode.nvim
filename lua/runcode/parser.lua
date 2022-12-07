@@ -14,7 +14,8 @@ M.parse = function(cmd, project_name)
         ["%"] = vim.fn.expand('%:p'),
         ["#"] = dump_path,
         ["@"] = vim.fn.expand('%:t:r'),
-        ["^"] = project_name
+        ["^"] = project_name,
+        ["&"] = vim.fn.expand('%:p:h')
     }
 
     for sub, rep in pairs(parsing_table) do
