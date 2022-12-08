@@ -81,7 +81,6 @@ Here are the expressions being substituted
 | %          | `vim.fn.expand('%:p')`               |
 | @          | `vim.fn.expand('%:t:r')`             |
 | #          | `vim.fn.stdpath('data')..'/rooter/'` |
-| &          | `vim.fn.expand('%:p:h')`             |
 | ^          | project name if found                |
 
 The `#` expression should be use to store executables before execution.
