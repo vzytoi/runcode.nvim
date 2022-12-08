@@ -1,11 +1,11 @@
 return {
-    compile = {
+    Compile = {
         c = "gcc % -o #@ && #@",
         rust = "rustc % -o #@ && #@",
         ocaml = "ocamlc % -o #@ && #@",
         go = "go build -o #@ % && #@"
     },
-    interpret = {
+    Interpret = {
         ocaml = "ocaml %",
         typescript = "ts-node %",
         javascript = "node %",
@@ -14,7 +14,7 @@ return {
         python = "python3 %",
         lua = "lua %",
     },
-    project = {
+    Project = {
         ocaml = "dune exec ^",
         javascript = "node ^",
     }

@@ -13,10 +13,10 @@ use {
     "vzytoi/runcode.nvim",
     config = function()
         require('runcode').setup {
-            interpret = {
+            Interpret = {
                 ocaml = "ocaml %",
             },
-            compile = {
+            Compile = {
                 ocaml = "ocamlc % -o #@ && #@",
                 c = "gcc % -o $ && $"
             }
@@ -46,7 +46,7 @@ vim.keymap.set("n", "<leader>xx", function()
 end)
 
 -- run {
---     method = "project" | "interpret" | "compile" | nil
+--     method = "Project" | "Interpret" | "Compile" | nil
 --     dir = "vertical" | "horizontal" | "tab" | nil
 -- } 
 

@@ -26,6 +26,7 @@ end
 
 M.get = function(config, method, project_name)
     local ft = vim.bo.filetype
+    local used
     local cmd
 
     local has = function(tbl, el)
@@ -42,12 +43,16 @@ M.get = function(config, method, project_name)
 
     if method then
         cmd = config[method][ft]
-    elseif project_name and config.project[ft] then
-        cmd = config.project[ft]
-    elseif has(config.interpret, ft) then
-        cmd = config.interpret[ft]
-    elseif has(config.compile, ft) then
-        cmd = config.compile[ft]
+        used = method
+    elseif project_name and config.Project[ft] then
+        cmd = config.Project[ft]
+        used = "Project"
+    elseif has(config.Interpret, ft) then
+        cmd = config.Interpret[ft]
+        used = "Interpret"
+    elseif has(config.Compile, ft) then
+        cmd = config.Compile[ft]
+        used = "Compile"
     end
 
     -- si aucune commande n'est trouvée,
@@ -58,7 +63,7 @@ M.get = function(config, method, project_name)
         return
     end
 
-    return M.parse(cmd, project_name)
+    return M.parse(cmd, project_name), used
 end
 
 return M

@@ -21,7 +21,7 @@ M.endl = function(l, bufnr)
 end
 
 
-M.infos = function(timer, bufnr)
+M.infos = function(timer, method, bufnr)
     local origin = vim.api.nvim_get_current_buf()
 
     if bufnr == origin then
@@ -31,9 +31,10 @@ M.infos = function(timer, bufnr)
     M.lines(
         bufnr,
         string.format(
-            "In: %s %s | Lines: %s",
+            "In: %s %s | Lines: %s | Method: %s",
             timer.time, timer.unit,
-            vim.api.nvim_buf_line_count(origin)
+            vim.api.nvim_buf_line_count(origin),
+            method
         ),
         0,
         "RunCodeInfo"

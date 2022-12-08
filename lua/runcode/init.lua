@@ -12,20 +12,20 @@ M.setup = function(cmd)
 
     cmd = cmd or {}
 
-    local compile = cmd.compile or {}
-    local interpret = cmd.interpret or {}
-    local projects = cmd.project or {}
+    local compile = cmd.Compile or {}
+    local interpret = cmd.Interpret or {}
+    local projects = cmd.Project or {}
 
     commands.compile = vim.tbl_extend(
-        "force", commands.compile, compile
+        "force", commands.Compile, compile
     )
 
     commands.interpret = vim.tbl_extend(
-        "force", commands.interpret, interpret
+        "force", commands.Interpret, interpret
     )
 
     commands.interpret = vim.tbl_extend(
-        "force", commands.project, projects
+        "force", commands.Project, projects
     )
 end
 
@@ -36,7 +36,7 @@ M.run = function(tbl)
     local dir = tbl.dir or "horizontal"
 
     local name = project.get()
-    local cmd = parser.get(commands, tbl.method, name)
+    local cmd, method = parser.get(commands, tbl.method, name)
 
     if not cmd then
         return
@@ -71,7 +71,7 @@ M.run = function(tbl)
 
             loader.close(win)
 
-            write.infos(time, bufnr)
+            write.infos(time, method, bufnr)
             write.output_is(error, bufnr)
 
             write.endl(-1, bufnr)
