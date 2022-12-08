@@ -66,19 +66,20 @@ M.run = function(tbl)
         end,
         on_exit = function()
             local time = timer.stop()
+            local bufnr = buffer.prepare(dir)
 
-            buffer.prepare(dir)
-
-            write.infos(time)
-            write.output_is(error)
-
-            write.endl(-1)
-
-            write.table(output)
-
-            buffer.resize(dir)
 
             loader.close(win)
+
+            write.infos(time, bufnr)
+            write.output_is(error, bufnr)
+
+            write.endl(-1, bufnr)
+
+            write.table(output, bufnr)
+
+            buffer.resize(dir, bufnr)
+
         end
     })
 

@@ -1,5 +1,7 @@
 local M = {}
 
+local write = require('runcode.write')
+
 M.set_buffer_opts = function()
 
     vim.bo.bufhidden = "delete"
@@ -21,13 +23,13 @@ M.set_buffer_opts = function()
     ]]
 end
 
-M.is_open = function(name)
+M.is_open = function()
     local bufs = vim.tbl_filter(function(nr)
         return vim.api.nvim_buf_is_loaded(nr)
     end, vim.api.nvim_list_bufs())
 
     for _, buf in ipairs(bufs) do
-        if vim.bo.filetype == name then
+        if vim.bo.filetype == "RunCode" then
             return buf
         end
     end
@@ -35,8 +37,8 @@ M.is_open = function(name)
     return false
 end
 
-M.get_direction = function()
-    local win = vim.api.nvim_get_current_buf()
+M.direction = function(bufnr)
+    local win = vim.fn.bufwinid(bufnr)
 
     if vim.go.columns == vim.fn.winwidth(win) then
         return "horizontal"
@@ -47,24 +49,10 @@ M.get_direction = function()
     return "tab"
 end
 
-
-M.direction = function()
-    local win = vim.api.nvim_get_current_win()
-
-    if vim.go.columns == vim.fn.winwidth(win) then
-        return "horizontal"
-    elseif vim.fn.winheight(win) + vim.go.cmdheight + 2 == vim.go.lines then
-        return "vertical"
-    end
-
-    return "tab"
-end
-
-M.size = function()
-    local bufnr = vim.api.nvim_get_current_buf()
+M.size = function(bufnr)
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
-    if M.direction() == "horizontal" then
+    if M.direction(bufnr) == "horizontal" then
         return #lines
     else
         local m
@@ -79,14 +67,14 @@ M.size = function()
     end
 end
 
-M.resize = function(dir)
+M.resize = function(dir, bufnr)
 
     if vim.bo.filetype ~= "RunCode" then
         return
     end
 
-    local win = vim.api.nvim_get_current_win()
-    local size = M.size()
+    local win = vim.fn.bufwinid(bufnr)
+    local size = M.size(bufnr)
 
     vim.api[
         "nvim_win_set_" ..
@@ -101,7 +89,15 @@ M.create_link = function(nra, nrb)
 end
 
 M.prepare = function(dir)
+
     local nra = vim.api.nvim_get_current_buf()
+
+    local attach, val = pcall(vim.api.nvim_buf_get_var, nra, "To")
+
+    if attach then
+        write.clear(val)
+        return val
+    end
 
     local commands = {
         horizontal = "bo new",
@@ -114,6 +110,8 @@ M.prepare = function(dir)
 
     M.set_buffer_opts()
     M.create_link(nra, nrb)
+
+    return nrb
 end
 
 return M

@@ -4,12 +4,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
         vim.keymap.set("n", "<cr>", function()
             local from = vim.api.nvim_buf_get_var(0, "From")
-
             vim.api.nvim_command("q")
-
-            vim.api.nvim_set_current_win(
-                vim.fn.bufwinid(from)
-            )
+            vim.api.nvim_set_current_win(vim.fn.bufwinid(from))
+            vim.api.nvim_buf_del_var(from, "To")
         end, { buffer = 0 })
     end
 })

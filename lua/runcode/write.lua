@@ -1,6 +1,5 @@
 local M = {}
 
-
 M.clear = function(nr)
     nvim.buf_set_lines(nr, 0, -1, true, {})
 end
@@ -17,29 +16,31 @@ M.lines = function(nr, data, l, hl)
 end
 
 
-M.endl = function(l)
-    vim.api.nvim_buf_set_lines(vim.api.nvim_get_current_buf(), l, l, true, { "" })
+M.endl = function(l, bufnr)
+    vim.api.nvim_buf_set_lines(bufnr, l, l, true, { "" })
 end
 
 
-M.infos = function(timer)
-    local bufnr = vim.api.nvim_get_current_buf()
-    local origin_bufnr = vim.api.nvim_buf_get_var(bufnr, "From")
+M.infos = function(timer, bufnr)
+    local origin = vim.api.nvim_get_current_buf()
+
+    if bufnr == origin then
+        origin = vim.api.nvim_buf_get_var(bufnr, "From")
+    end
 
     M.lines(
         bufnr,
         string.format(
             "In: %s %s | Lines: %s",
             timer.time, timer.unit,
-            vim.api.nvim_buf_line_count(origin_bufnr)
+            vim.api.nvim_buf_line_count(origin)
         ),
         0,
         "RunCodeInfo"
     )
 end
 
-M.output_is = function(error)
-    local bufnr = vim.api.nvim_get_current_buf()
+M.output_is = function(error, bufnr)
 
     local filename = vim.fn.fnamemodify(vim.fn.bufname(
         vim.api.nvim_buf_get_var(bufnr, "From")
@@ -54,9 +55,7 @@ M.output_is = function(error)
 
 end
 
-M.table = function(tbl)
-    local bufnr = vim.api.nvim_get_current_buf()
-
+M.table = function(tbl, bufnr)
     for _, data in ipairs(tbl) do
         if not vim.tbl_isempty(data) then
             M.lines(bufnr, data, -1)
