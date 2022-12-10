@@ -60,6 +60,7 @@ M.get = function(config, method, project_name)
     -- TODO: notification
 
     if not cmd then
+        vim.api.nvim_echo({ { "Unsopported filetype", "ErrorMsg" } }, true, {})
         return
     end
 
