@@ -70,6 +70,8 @@ Of course all of them can be overridden and others added.
 | c          | ✖          | gcc % -o #@ && #@      | ✖
 | rust       | ✖          | rustc % -o #@ && #@    | ✖      
 | ocaml      | ocaml %    | ocamlc % -o #@ && #@   | dune exec ^
+| ruby       | ruby %     | ✖                      | ✖
+| sh         | sh %       | ✖                      | ✖
 
 ## How to create yours
 
