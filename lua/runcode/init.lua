@@ -4,7 +4,6 @@ local parser = require('runcode.parser')
 local buffer = require('runcode.buffer')
 local write = require('runcode.write')
 local timer = require('runcode.timer')
-local project = require('runcode.project')
 local commands = require('runcode.commands')
 local loader = require('runcode.loader')
 
@@ -34,15 +33,17 @@ M.run = function(tbl)
     tbl = tbl or {}
 
     local dir = tbl.dir or "horizontal"
-
-    local name = project.get()
-    local cmd, method = parser.get(commands, tbl.method, name)
+    local cmd, method = parser.get(commands, tbl.method)
 
     if not cmd then
         return
     end
 
-    vim.api.nvim_command("silent w")
+
+    if not vim.fn.getbufvar(0, '&buftype') then
+        vim.api.nvim_command("silent w")
+    end
+
     local win = loader.create("Loading...")
 
     local output = {}

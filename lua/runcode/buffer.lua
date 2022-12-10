@@ -92,6 +92,11 @@ M.prepare = function(dir)
 
     local nra = vim.api.nvim_get_current_buf()
 
+    if vim.fn.getbufvar(nra, '&filetype') == "RunCode" then
+        write.clear(nra)
+        return nra
+    end
+
     local attach, val = pcall(vim.api.nvim_buf_get_var, nra, "To")
 
     if attach then

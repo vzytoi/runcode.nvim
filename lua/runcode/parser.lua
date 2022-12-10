@@ -1,20 +1,26 @@
 local M = {}
 
+local project = require('runcode.project')
+
 -- si un projet est détecté alors project_name
 -- représentera le nom du projet courrant car il est
 -- nécéssaire pour certains language de connaître le nom
 -- du projet pour pouvoir l'éxecuter (ocaml par example).
 
-M.parse = function(cmd, project_name)
+M.parse = function(cmd, bufnr)
+    bufnr = bufnr or vim.api.nvim_get_current_buf()
 
     local dump_path = vim.fn.stdpath('data') .. "/runcode/"
     local _ = pcall(vim.fn.mkdir, dump_path)
 
+    -- print(vim.api.nvim_buf_get_name(bufnr))
+    -- print('parse sur ' .. bufnr)
+
     local parsing_table = {
-        ["%"] = vim.fn.expand('%:p'),
+        ["@"] = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t:r"),
+        ["%"] = vim.api.nvim_buf_get_name(bufnr),
         ["#"] = dump_path,
-        ["@"] = vim.fn.expand('%:t:r'),
-        ["^"] = project_name,
+        ["^"] = project.get(),
     }
 
     for sub, rep in pairs(parsing_table) do
@@ -24,8 +30,17 @@ M.parse = function(cmd, project_name)
     return cmd
 end
 
-M.get = function(config, method, project_name)
-    local ft = vim.bo.filetype
+M.get = function(commands, method, bufnr)
+    bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+    local ft = vim.fn.getbufvar(bufnr, '&filetype')
+
+    -- si j'essaye d'executer un output runcode,
+    -- je réexectue le fichier source à la place
+    if ft == "RunCode" then
+        return M.get(commands, method, vim.api.nvim_buf_get_var(bufnr, "From"))
+    end
+
     local used
     local cmd
 
@@ -36,35 +51,35 @@ M.get = function(config, method, project_name)
     end
 
     -- ordre de priorité:
-    -- (*) Méthode imposée par l'utilisateur
+    -- (*) Méthode impose par l'utilisateur
     -- (*) Detection de projet
     -- (*) Interpretation (pas besoins de dump folder)
     -- (*) Compilation
 
     if method then
-        cmd = config[method][ft]
+        cmd = commands[method][ft]
         used = method
-    elseif project_name and config.Project[ft] then
-        cmd = config.Project[ft]
+    elseif project.get() and commands.Project[ft] then
+        cmd = commands.Project[ft]
         used = "Project"
-    elseif has(config.Interpret, ft) then
-        cmd = config.Interpret[ft]
+    elseif has(commands.Interpret, ft) then
+        cmd = commands.Interpret[ft]
         used = "Interpret"
-    elseif has(config.Compile, ft) then
-        cmd = config.Compile[ft]
+    elseif has(commands.Compile, ft) then
+        cmd = commands.Compile[ft]
         used = "Compile"
     end
 
     -- si aucune commande n'est trouvée,
     -- alors on ne fait rien
     -- TODO: notification
-
     if not cmd then
         vim.api.nvim_echo({ { "Unsopported filetype", "ErrorMsg" } }, true, {})
-        return
+        return nil
     end
 
-    return M.parse(cmd, project_name), used
+
+    return M.parse(cmd, bufnr), used
 end
 
 return M
