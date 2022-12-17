@@ -1,6 +1,6 @@
 return {
     Compile = {
-        c = "gcc % -o #@ && #@",
+        c = "gcc -fsanitize=undefined % -o #@ && #@",
         rust = "rustc % -o #@ && #@",
         ocaml = "ocamlc % -o #@ && #@",
         go = "go build -o #@ % && #@"
