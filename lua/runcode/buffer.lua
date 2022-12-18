@@ -69,7 +69,7 @@ end
 
 M.resize = function(dir, bufnr)
 
-    if vim.bo.filetype ~= "RunCode" then
+    if vim.bo.filetype ~= "RunCode" or dir == "tab" then
         return
     end
 
