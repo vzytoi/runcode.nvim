@@ -74,7 +74,7 @@ M.get = function(commands, method, bufnr)
     -- alors on ne fait rien
     -- TODO: notification
     if not cmd then
-        vim.api.nvim_echo({ { "Unsopported filetype", "ErrorMsg" } }, true, {})
+        vim.api.nvim_echo({ { "Unsopported filetype/method", "ErrorMsg" } }, true, {})
         return nil
     end
 
