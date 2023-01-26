@@ -19,5 +19,6 @@ return {
     Project = {
         ocaml = "dune exec ^",
         javascript = "node ^",
+        c = "gcc -fsanitize=undefined ^ % -o #@ && #@"
     }
 }

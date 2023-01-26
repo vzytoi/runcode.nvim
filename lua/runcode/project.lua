@@ -27,6 +27,32 @@ M.javascript = function()
 
 end
 
+
+M.c = function()
+    local content = vim.fn.readfile(vim.fn.expand('%:p'))
+    local dep = {}
+    local i = 1
+
+    while i <= #content and string.sub(content[i], 1, 1) == "#" do
+        local m = string.match(content[i], '#include%s*"(.*)"')
+
+        if m ~= nil then
+            m = m:gsub("%.h", ".c")
+
+            dep[#dep + 1] = m
+        end
+
+        i = i + 1
+    end
+
+    if #dep == 0 then
+        return
+    end
+
+    return table.concat(dep, " ")
+end
+
+
 M.ocaml = function()
 
     if not search { "dune-workspace", "dune-project" } then

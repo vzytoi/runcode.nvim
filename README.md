@@ -29,7 +29,7 @@ use {
 
 ```lua
 
--- If no method is specified, 
+-- If no method is specified,
 -- a command will be searched in both starting with the interpretation.
 
 vim.keymap.set("n", "<leader>x", function()
@@ -48,7 +48,7 @@ end)
 -- run {
 --     method = "Project" | "Interpret" | "Compile" | nil
 --     dir = "vertical" | "horizontal" | "tab" | nil
--- } 
+-- }
 
 
 ```
@@ -57,7 +57,7 @@ end)
 ## Supported list
 
 Here is the list of languages already supported.<br/>
-Of course all of them can be overridden and others added. 
+Of course all of them can be overridden and others added.
 
 | Language   | Interpret  | Compile                | Project
 |------------|------------|------------------------|-----------
@@ -67,8 +67,8 @@ Of course all of them can be overridden and others added.
 | php        | php %      | ✖                      | ✖
 | python     | python3 %  | ✖                      | ✖
 | lua        | lua %      | ✖                      | ✖
-| c          | ✖          | gcc % -o #@ && #@      | ✖
-| rust       | ✖          | rustc % -o #@ && #@    | ✖      
+| c          | ✖          | gcc % -o #@ && #@      | gcc ^ % -o #@ && #@
+| rust       | ✖          | rustc % -o #@ && #@    | ✖
 | ocaml      | ocaml %    | ocamlc % -o #@ && #@   | dune exec ^
 | ruby       | ruby %     | ✖                      | ✖
 | sh         | sh %       | ✖                      | ✖
@@ -78,7 +78,7 @@ Of course all of them can be overridden and others added.
 As shown in the installation section, call the setup function and add the languages you want.<br/>
 Here are the expressions being substituted
 
-| Expression | Substitution                         | 
+| Expression | Substitution                         |
 |------------|--------------------------------------|
 | %          | `vim.fn.expand('%:p')`               |
 | @          | `vim.fn.expand('%:t:r')`             |
@@ -88,7 +88,7 @@ Here are the expressions being substituted
 The `#` expression should be use to store executables before execution.
 
 If an expression is missing, make an issue or a pull request.<br/>
-The expression list can be found in _runcode/parser.lua_. 
+The expression list can be found in _runcode/parser.lua_.
 
 ## Highlights
 
@@ -110,4 +110,3 @@ Four highlights can be configured to match your needs:<br/>
 
 [vim-executioner](https://github.com/EvanQuan/vim-executioner)<br/>
 [executor.nvim](https://github.com/google/executor.nvim)
-
