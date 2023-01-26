@@ -29,7 +29,11 @@ end
 
 
 M.c = function()
-    local content = vim.fn.readfile(vim.fn.expand('%:p'))
+
+    local fn = vim.fn.expand('%:p')
+    local dir = vim.fs.dirname(fn)
+
+    local content = vim.fn.readfile(fn)
     local dep = {}
     local i = 1
 
@@ -39,7 +43,7 @@ M.c = function()
         if m ~= nil then
             m = m:gsub("%.h", ".c")
 
-            dep[#dep + 1] = m
+            dep[#dep + 1] = dir .. "/" .. m
         end
 
         i = i + 1
