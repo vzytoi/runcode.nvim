@@ -69,6 +69,7 @@ Of course all of them can be overridden and others added.
 | lua        | lua %      | ✖                      | ✖
 | c          | ✖          | gcc % -o #@ && #@      | gcc ^ % -o #@ && #@
 | rust       | ✖          | rustc % -o #@ && #@    | ✖
+| html       | open %     | ✖                      | ✖
 | ocaml      | ocaml %    | ocamlc % -o #@ && #@   | dune exec ^
 | ruby       | ruby %     | ✖                      | ✖
 | sh         | sh %       | ✖                      | ✖

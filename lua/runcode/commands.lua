@@ -14,7 +14,8 @@ return {
         python = "python3 %",
         lua = "lua %",
         sh = "sh %",
-        ruby = "ruby %"
+        ruby = "ruby %",
+        html = "open %"
     },
     Project = {
         ocaml = "dune exec ^",
