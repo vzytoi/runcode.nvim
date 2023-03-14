@@ -30,8 +30,8 @@ end
 M.run = function(tbl)
     tbl = tbl or {}
 
-    if tbl.dir == nil then
-        tbl.dir = true
+    if tbl.cd == nil then
+        tbl.cd = true
     end
 
     if tbl.save == nil then
@@ -52,7 +52,7 @@ M.run = function(tbl)
 
     -- cd into current file's directory. this options
     -- is active by default.
-    if tbl.dir then
+    if tbl.cd then
         vim.cmd.lcd(vim.fn.expand("%:p:h"))
     end
 

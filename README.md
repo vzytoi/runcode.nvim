@@ -48,6 +48,8 @@ end)
 -- run {
 --     method = "Project" | "Interpret" | "Compile" | nil
 --     dir = "vertical" | "horizontal" | "tab" | nil
+--     cd = true | false
+--     save = true | false
 -- }
 
 
