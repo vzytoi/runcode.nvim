@@ -1,7 +1,7 @@
 local M = {}
 
 M.clear = function(nr)
-    nvim.buf_set_lines(nr, 0, -1, true, {})
+    vim.api.nvim_buf_set_lines(nr, 0, -1, true, {})
 end
 
 M.lines = function(nr, data, l, hl)

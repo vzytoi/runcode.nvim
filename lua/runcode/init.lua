@@ -8,7 +8,6 @@ local commands = require('runcode.commands')
 local loader = require('runcode.loader')
 
 M.setup = function(cmd)
-
     cmd = cmd or {}
 
     local compile = cmd.Compile or {}
@@ -29,8 +28,15 @@ M.setup = function(cmd)
 end
 
 M.run = function(tbl)
-
     tbl = tbl or {}
+
+    if tbl.dir == nil then
+        tbl.dir = true
+    end
+
+    if tbl.save == nil then
+        tbl.save = true
+    end
 
     local dir = tbl.dir or "horizontal"
     local cmd, method = parser.get(commands, tbl.method)
@@ -39,9 +45,15 @@ M.run = function(tbl)
         return
     end
 
-
-    if not vim.fn.getbufvar(0, '&buftype') then
+    -- save your current file before running the code.
+    if tbl.save and vim.api.nvim_buf_get_option(0, 'modifiable') then
         vim.api.nvim_command("silent w")
+    end
+
+    -- cd into current file's directory. this options
+    -- is active by default.
+    if tbl.dir then
+        vim.cmd.lcd(vim.fn.expand("%:p:h"))
     end
 
     local win = loader.create("Loading...")
@@ -75,16 +87,13 @@ M.run = function(tbl)
             write.infos(time, method, bufnr)
             write.output_is(error, bufnr)
 
-            write.endl(-1, bufnr)
+            write.endl( -1, bufnr)
 
             write.table(output, bufnr)
 
             buffer.resize(dir, bufnr)
-
         end
     })
-
-
 end
 
 

@@ -13,9 +13,6 @@ M.parse = function(cmd, bufnr)
     local dump_path = vim.fn.stdpath('data') .. "/runcode/"
     local _ = pcall(vim.fn.mkdir, dump_path)
 
-    -- print(vim.api.nvim_buf_get_name(bufnr))
-    -- print('parse sur ' .. bufnr)
-
     local parsing_table = {
         ["@"] = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t:r"),
         ["%"] = vim.api.nvim_buf_get_name(bufnr),

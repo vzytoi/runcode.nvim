@@ -51,8 +51,15 @@ end)
 -- }
 
 
+
 ```
 
+In some cases, execute a file won't work if your current directory isn't the same as your current<br/>
+file's directory. Thus by default, runcode will cd into your current file's directory. If you want to disable <br/>
+this behavior, you can set `cd = false` in the run function.<br/>
+
+By default runcode will automatically save your current file before running it.<br/>
+You can of course disable this behavior by setting `save = false` in the run function.<br/>
 
 ## Supported list
 
