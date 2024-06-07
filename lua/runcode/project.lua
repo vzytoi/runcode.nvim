@@ -24,12 +24,10 @@ M.javascript = function()
     if data.main then
         return vim.fs.dirname(path[1]) .. "/" .. data.main
     end
-
 end
 
 
 M.c = function()
-
     local fn = vim.fn.expand('%:p')
     local dir = vim.fs.dirname(fn)
 
@@ -57,8 +55,36 @@ M.c = function()
 end
 
 
-M.ocaml = function()
+M.cpp = function()
+    local fn = vim.fn.expand('%:p')
+    local dir = vim.fs.dirname(fn)
 
+    local content = vim.fn.readfile(fn)
+    local dep = {}
+    local i = 1
+
+    while i <= #content and string.sub(content[i], 1, 1) == "#" do
+        local m = string.match(content[i], '#include%s*"(.*)"')
+
+        if m ~= nil and m ~= "time.h" then
+            m = m:gsub("%.h", ".cpp")
+
+            dep[#dep + 1] = dir .. "/" .. m
+        end
+
+        i = i + 1
+    end
+
+    if #dep == 0 then
+        return
+    end
+
+    return table.concat(dep, " ")
+end
+
+
+
+M.ocaml = function()
     if not search { "dune-workspace", "dune-project" } then
         return
     end

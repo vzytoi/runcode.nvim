@@ -1,6 +1,7 @@
 return {
     Compile = {
         c = "gcc -fsanitize=undefined % -o #@ && #@",
+        cpp = "g++ % -o #@ -Ofast -std=c++17 && #@",
         rust = "rustc % -o #@ && #@",
         ocaml = "ocamlc % -o #@ && #@",
         go = "go build -o #@ % && #@"
@@ -20,6 +21,7 @@ return {
     Project = {
         ocaml = "dune exec ^",
         javascript = "node ^",
-        c = "gcc -fsanitize=undefined ^ % -o #@ && #@"
+        c = "gcc -fsanitize=undefined ^ % -o #@ && #@",
+        cpp = "g++ % ^ -o #@ && #@"
     }
 }

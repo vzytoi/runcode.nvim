@@ -87,7 +87,7 @@ M.run = function(tbl)
             write.infos(time, method, bufnr)
             write.output_is(error, bufnr)
 
-            write.endl( -1, bufnr)
+            write.endl(-1, bufnr)
 
             write.table(output, bufnr)
 
